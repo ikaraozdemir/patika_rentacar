@@ -2,6 +2,7 @@ package view;
 import business.BrandManager;
 import business.ModelManager;
 import core.Helper;
+import entity.Model;
 import entity.User;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -54,9 +55,23 @@ public class AdminView extends Layout{
         tableRowSelect(this.tbl_model);
         this.model_menu = new JPopupMenu();
         this.model_menu.add("Yeni").addActionListener(e -> {
-            ModelView modelView = new ModelView(null);
+            ModelView modelView = new ModelView(new Model());
+            modelView.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadModelTable();
+                }
+            });
         });
         this.model_menu.add("Güncelle").addActionListener(e -> {
+            int selectedModelId = this.getTableSelectedRow(tbl_model,0);
+            ModelView modelView = new ModelView(this.modelManager.getById(selectedModelId));
+            modelView.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadModelTable();
+                }
+            });
 
         });
         this.model_menu.add("Sil").addActionListener(e -> {

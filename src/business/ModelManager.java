@@ -36,7 +36,7 @@ public class ModelManager {
             Helper.showMsg("error");
             return false;
         }
-        return this.modelDao.update(model);
+        return this.modelDao.save(model);
     }
     public Model getById (int id){
         return this.modelDao.getById(id);

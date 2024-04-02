@@ -30,8 +30,9 @@ public class BrandManager {
     public boolean save(Brand brand) {
         if(brand.getId() != 0){
             Helper.showMsg("error");
+            return false;
         }
-        return this.brandDao.update(brand);
+        return this.brandDao.save(brand);
     }
 
     public Brand getById(int id){

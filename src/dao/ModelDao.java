@@ -50,14 +50,14 @@ public class ModelDao {
     }
 
     public boolean save(Model model) {
-        String query = "INSERT INTO public.model" +
+        String query = "INSERT INTO public.model " +
                 "(" +
                 "model_brand_id," +
                 "model_name," +
                 "model_type," +
                 "model_year," +
                 "model_fuel," +
-                "model_gear" +
+                "model_gear"  +
                 ")" + "VALUES (?,?,?,?,?,?)";
         try {
             PreparedStatement pr = this.connection.prepareStatement(query);
@@ -75,13 +75,13 @@ public class ModelDao {
     }
 
     public boolean update(Model model) {
-        String query = "UPDATE public.model SET" +
+        String query = "UPDATE public.model SET " +
         "model_brand_id = ? , " +
         "model_name = ? , " +
-        "model_type = ? ," +
+        "model_type = ? , " +
         "model_year = ? , " +
-        "model_fuel = ? ," +
-        "model_gear = ? ," +
+        "model_fuel = ? , " +
+        "model_gear = ? , " +
         "WHERE model_id = ?";
         try {
             PreparedStatement pr = this.connection.prepareStatement(query);
@@ -93,7 +93,6 @@ public class ModelDao {
             pr.setString(6, model.getGear().toString());
             pr.setInt(7,model.getId());
             return pr.executeUpdate() != -1;
-
         }catch (SQLException e){
             e.printStackTrace();
         }

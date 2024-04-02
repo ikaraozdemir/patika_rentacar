@@ -29,7 +29,7 @@ public class BrandDao {
     }
 
     public boolean save (Brand brand){
-        String query = "ISERT INTO public.brand (brand_name) VALUES ?";
+        String query = "INSERT INTO public.brand (brand_name) VALUES (?)";
         try{
             PreparedStatement pr = this.connection.prepareStatement(query);
             pr.setString(1,brand.getName());
@@ -41,7 +41,7 @@ public class BrandDao {
         return true;
     }
     public boolean update (Brand brand){
-        String query = "UPDATE public.brand SET brand_nae = ? WHERE brand_id = ?";
+        String query = "UPDATE public.brand SET brand_name = ? WHERE brand_id = ?";
         try{
             PreparedStatement pr = this.connection.prepareStatement(query);
             pr.setString(1,brand.getName());
