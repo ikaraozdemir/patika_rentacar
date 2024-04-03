@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class BrandDao {
  private final Connection connection;
 
-    public BrandDao( ) {
+    public BrandDao() {
         this.connection = Db.getInstance();
     }
 

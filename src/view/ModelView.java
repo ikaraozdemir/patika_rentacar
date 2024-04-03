@@ -55,7 +55,7 @@ public class ModelView extends Layout{
             if (Helper.isFieldListEmpty(new JTextField[] {this.fld_model_name, this.fld_model_year})){
                 Helper.showMsg("fill");
             }else {
-                boolean result =false;
+                boolean result;
                 ComboItem selectedBrand  = (ComboItem) cmb_brand.getSelectedItem();
                 this.model.setYear(fld_model_year.getText());
                 this.model.setName(fld_model_name.getText());
@@ -66,12 +66,13 @@ public class ModelView extends Layout{
 
                 if(this.model.getId() != 0){
                     result = this.modelManager.update(this.model);
-
+                    dispose();
                 }else {
                     result = this.modelManager.save(this.model);
                 }
                 if (result){
                     Helper.showMsg("done");
+
                     dispose();
                 }else {
                     Helper.showMsg("error");

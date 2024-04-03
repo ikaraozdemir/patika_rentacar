@@ -18,8 +18,8 @@ public class BrandView extends Layout{
     private BrandManager brandManager;
 
     public BrandView(Brand brand) {
-        this.brandManager = new BrandManager();
         this.brand = brand;
+        this.brandManager = new BrandManager();
         this.add(container);
         this.guiInitialize(300, 200);
 

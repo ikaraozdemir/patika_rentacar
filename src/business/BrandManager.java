@@ -14,10 +14,11 @@ public class BrandManager {
     public ArrayList<Object[]> getForTable (int size){
         ArrayList<Object[]> brandRowList = new ArrayList<>();
         for (Brand brand : this.findAll()) {
-            Object[] rowObject = new Object[size];
             int i = 0;
+            Object[] rowObject = new Object[size];
             rowObject[i++] = brand.getId();
             rowObject[i++] = brand.getName();
+
             brandRowList.add(rowObject);
         }
         return brandRowList;
@@ -45,9 +46,7 @@ public class BrandManager {
             return false;
         }
         return this.brandDao.update(brand);
-
     }
-
     public boolean delete (int id) {
         if (this.getById(id) == null){
             Helper.showMsg(id + "ID kayıtlı marka bulunamadı.");

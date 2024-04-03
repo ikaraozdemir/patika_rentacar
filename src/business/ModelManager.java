@@ -23,6 +23,7 @@ public class ModelManager {
             rowObject[i++] = model.getYear();
             rowObject[i++] = model.getFuel();
             rowObject[i++] = model.getGear();
+
             modelObjList.add(rowObject);
         }
         return modelObjList;
@@ -45,7 +46,7 @@ public class ModelManager {
 
     public boolean update(Model model){
         if(this.getById(model.getId()) == null){
-            Helper.showMsg(model.getId() + "ID kayıtlı model bulunamadı");
+            Helper.showMsg("notFound");
             return false;
         }
         return this.modelDao.update(model);
@@ -58,7 +59,4 @@ public class ModelManager {
         }
         return this.modelDao.delete(id);
     }
-
-
-
 }
