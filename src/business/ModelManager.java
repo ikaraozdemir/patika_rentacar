@@ -11,9 +11,9 @@ public class ModelManager {
         this.modelDao = new ModelDao();
     }
 
-    public ArrayList<Object[]> getForTable (int size) {
+    public ArrayList<Object[]> getForTable (int size,ArrayList<Model> modelList) {
         ArrayList<Object[]> modelObjList = new ArrayList<>();
-        for (Model model : this.findAll()){
+        for (Model model : modelList){
             int i = 0;
             Object[] rowObject = new Object[size];
             rowObject[i++] = model.getId();
@@ -58,5 +58,35 @@ public class ModelManager {
             return false;
         }
         return this.modelDao.delete(id);
+    }
+
+    public ArrayList<Model> getByBrandId (int brandId){
+        return this.modelDao.getByListBrandId(brandId);
+    }
+
+    public ArrayList<Model> searchForTable (int brandId, Model.Fuel fuel, Model.Gear gear, Model.Type type) {
+
+        String select = "SELECT * FROM  public.model";
+        ArrayList<String> whereList = new ArrayList<>();
+
+        if (brandId != 0) {
+            whereList.add("model_brand_id =" + brandId);
+        }
+        if (fuel != null) {
+            whereList.add("model_fuel ='" + fuel.toString() + "'");
+        }
+        if (gear != null) {
+            whereList.add("model_gear = '" + gear.toString() + "'");
+        }
+        if (type != null) {
+            whereList.add("model_type = '" + fuel.toString() + "'");
+        }
+
+        String whereStr = String.join(" AND ", whereList);
+        String query = select;
+        if (whereStr.length() > 0) {
+            query += " WHERE " + whereStr;
+        }
+        return this.modelDao.selectByQuery(query);
     }
 }
