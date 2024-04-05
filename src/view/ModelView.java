@@ -11,7 +11,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ModelView extends Layout{
+public class ModelView extends Layout {
     private JPanel container;
     private JLabel lbl_heading;
     private JComboBox<ComboItem> cmb_brand;
@@ -25,7 +25,7 @@ public class ModelView extends Layout{
     private ModelManager modelManager;
     private BrandManager brandManager;
 
-    public ModelView ( Model model) {
+    public ModelView(Model model) {
         this.model = model;
         this.modelManager = new ModelManager();
         this.brandManager = new BrandManager();
@@ -33,15 +33,15 @@ public class ModelView extends Layout{
         this.guiInitialize(300, 500);
 
         //Brand combobox'ı doldurur.
-        for(Brand brand : this.brandManager.findAll()){
-            this.cmb_brand.addItem(new ComboItem(brand.getId(),brand.getName()));
+        for (Brand brand : this.brandManager.findAll()) {
+            this.cmb_brand.addItem(new ComboItem(brand.getId(), brand.getName()));
         }
         //Type, Fuel ve Gear combobox'ı doldurur.
         this.cmb_model_fuel.setModel(new DefaultComboBoxModel<>(Model.Fuel.values()));
         this.cmb_model_gear.setModel(new DefaultComboBoxModel<>(Model.Gear.values()));
         this.cmb_model_type.setModel(new DefaultComboBoxModel<>(Model.Type.values()));
 
-        if(this.model.getId() != 0){
+        if (this.model.getId() != 0) {
             this.fld_model_year.setText(this.model.getYear());
             this.fld_model_name.setText(this.model.getName());
             this.cmb_model_fuel.getModel().setSelectedItem(this.model.getFuel());
@@ -52,33 +52,32 @@ public class ModelView extends Layout{
         }
 
         this.btn_model_save.addActionListener(e -> {
-            if (Helper.isFieldListEmpty(new JTextField[] {this.fld_model_name, this.fld_model_year})){
+            if (Helper.isFieldListEmpty(new JTextField[]{this.fld_model_name, this.fld_model_year})) {
                 Helper.showMsg("fill");
-            }else {
+            } else {
                 boolean result;
-                ComboItem selectedBrand  = (ComboItem) cmb_brand.getSelectedItem();
+                ComboItem selectedBrand = (ComboItem) cmb_brand.getSelectedItem();
                 this.model.setYear(fld_model_year.getText());
                 this.model.setName(fld_model_name.getText());
                 this.model.setBrand_id(selectedBrand.getKey());
-                this.model.setType((Model.Type)cmb_model_type.getSelectedItem());
-                this.model.setFuel((Model.Fuel)cmb_model_fuel.getSelectedItem());
-                this.model.setGear((Model.Gear)cmb_model_gear.getSelectedItem());
+                this.model.setType((Model.Type) cmb_model_type.getSelectedItem());
+                this.model.setFuel((Model.Fuel) cmb_model_fuel.getSelectedItem());
+                this.model.setGear((Model.Gear) cmb_model_gear.getSelectedItem());
 
-                if(this.model.getId() != 0){
+                if (this.model.getId() != 0) {
                     result = this.modelManager.update(this.model);
                     dispose();
-                }else {
+                } else {
                     result = this.modelManager.save(this.model);
                 }
-                if (result){
+                if (result) {
                     Helper.showMsg("done");
 
                     dispose();
-                }else {
+                } else {
                     Helper.showMsg("error");
                 }
             }
         });
     }
-
 }

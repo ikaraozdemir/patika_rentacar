@@ -1,4 +1,5 @@
 package view;
+
 import business.UserManager;
 import core.Helper;
 import entity.User;
@@ -19,26 +20,23 @@ public class LoginView extends Layout {
     private JLabel lbl_pass;
     private final UserManager userManager;
 
-
-
-    public LoginView () {
+    public LoginView() {
         this.userManager = new UserManager();
         this.add(container);
-        this.guiInitialize(400,400);
+        this.guiInitialize(400, 400);
         btn_login.addActionListener(e -> {
             //Alanların boş olup olmadığını kontrol etme
-            JTextField[] checkFieldLsit = {this.fld_username,this.fld_pass};
-            if (Helper.isFieldListEmpty(checkFieldLsit)){
+            JTextField[] checkFieldLsit = {this.fld_username, this.fld_pass};
+            if (Helper.isFieldListEmpty(checkFieldLsit)) {
                 Helper.showMsg("fill");
-            }else {
-                // Eğer boş değise veritabanında bu entry'nin olup olmadığını kontrol et.
-                User loginUser = this.userManager.findByLogin(this.fld_username.getText(),this.fld_pass.getText());
-                if (loginUser == null){
+            } else {
+                // Eğer boş değilse veritabanında bu entry'nin olup olmadığını kontrol eder.
+                User loginUser = this.userManager.findByLogin(this.fld_username.getText(), this.fld_pass.getText());
+                if (loginUser == null) {
                     Helper.showMsg("notFound");
-                }else {
+                } else {
                     AdminView adminView = new AdminView(loginUser);
-                //Login olduktan sonra LoginView'i kapatır.
-                  dispose();
+                    dispose();
                 }
             }
         });

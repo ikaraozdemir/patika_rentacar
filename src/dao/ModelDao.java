@@ -1,6 +1,8 @@
 package dao;
+
 import core.Db;
 import entity.Model;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +13,7 @@ public class ModelDao {
     private Connection connection;
     private final BrandDao brandDao = new BrandDao();
 
-    public ModelDao(){
+    public ModelDao() {
         this.connection = Db.getInstance();
     }
 
@@ -25,55 +27,55 @@ public class ModelDao {
             if (rs.next()) {
                 obj = this.match(rs);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return obj;
     }
 
     public ArrayList<Model> findAll() {
-        return this.selectByQuery ("SELECT * FROM public.model ORDER BY model_id ASC");
+        return this.selectByQuery("SELECT * FROM public.model ORDER BY model_id ASC");
     }
 
-    public ArrayList<Model> getByListBrandId (int brandId) {
+    public ArrayList<Model> getByListBrandId(int brandId) {
         return this.selectByQuery("SELECT * FROM public.model WHERE model_brand_id = " + brandId);
     }
 
-    public ArrayList<Model> selectByQuery (String query) {
+    public ArrayList<Model> selectByQuery(String query) {
         ArrayList<Model> modelList = new ArrayList<>();
         try {
             ResultSet rs = this.connection.createStatement().executeQuery(query);
-            while (rs.next()){
+            while (rs.next()) {
                 modelList.add(this.match(rs));
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return modelList;
     }
 
     public boolean save(Model model) {
-            String query = "INSERT INTO public.model " +
-                    "(" +
-                    "model_brand_id," +
-                    "model_name," +
-                    "model_type," +
-                    "model_year," +
-                    "model_fuel," +
-                    "model_gear" +
-                    ")" +
-                    "VALUES (?,?,?,?,?,?)";
+        String query = "INSERT INTO public.model " +
+                "(" +
+                "model_brand_id," +
+                "model_name," +
+                "model_type," +
+                "model_year," +
+                "model_fuel," +
+                "model_gear" +
+                ")" +
+                "VALUES (?,?,?,?,?,?)";
 
         try {
             PreparedStatement pr = this.connection.prepareStatement(query);
-            pr.setInt(1,model.getBrand_id());
-            pr.setString(2,model.getName());
-            pr.setString(3,model.getType().toString());
-            pr.setString(4,model.getYear());
-            pr.setString(5,model.getFuel().toString());
-            pr.setString(6,model.getGear().toString());
+            pr.setInt(1, model.getBrand_id());
+            pr.setString(2, model.getName());
+            pr.setString(3, model.getType().toString());
+            pr.setString(4, model.getYear());
+            pr.setString(5, model.getFuel().toString());
+            pr.setString(6, model.getGear().toString());
             return pr.executeUpdate() != -1;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
@@ -98,19 +100,19 @@ public class ModelDao {
             pr.setString(6, model.getGear().toString());
             pr.setInt(7, model.getId());
             return pr.executeUpdate() != -1;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return true;
     }
 
-    public boolean delete (int id) {
+    public boolean delete(int id) {
         String query = "DELETE FROM public.model WHERE model_id = ?";
-        try{
+        try {
             PreparedStatement pr = this.connection.prepareStatement(query);
-            pr.setInt(1,id);
+            pr.setInt(1, id);
             return pr.executeUpdate() != -1;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return true;
@@ -128,5 +130,4 @@ public class ModelDao {
         model.setBrand_id(rs.getInt("model_brand_id"));
         return model;
     }
-
 }

@@ -1,4 +1,5 @@
 package dao;
+
 import core.Db;
 import entity.User;
 
@@ -7,7 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-// Veritaanı işlemleri
+
+// Veritabanı işlemleri
 public class UserDao {
     private final Connection connection;
 
@@ -20,25 +22,26 @@ public class UserDao {
         String sql = "SELECT * FROM public.user";
         try {
             ResultSet rs = this.connection.createStatement().executeQuery(sql);
-            while (rs.next()){
+            while (rs.next()) {
                 userList.add(this.match(rs));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return userList;
     }
-// Veritabanındaki kullanıcı bilgilerini kontrol eder ve kullanıcı nesnesi döndürür.
+
+    // Veritabanındaki kullanıcı bilgilerini kontrol eder ve kullanıcı nesnesi döndürür.
     public User findByLogin(String username, String password) {
         User obj = null;
         String query = "SELECT * FROM public.user WHERE user_name = ? AND user_password = ?";
 
         try {
             PreparedStatement pr = this.connection.prepareStatement(query);
-            pr.setString(1,username);
-            pr.setString(2,password);
+            pr.setString(1, username);
+            pr.setString(2, password);
             ResultSet rs = pr.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 obj = this.match(rs);
             }
         } catch (SQLException e) {
@@ -55,5 +58,4 @@ public class UserDao {
         obj.setRole(rs.getString("user_role"));
         return obj;
     }
-
 }

@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BrandView extends Layout{
+public class BrandView extends Layout {
     private JPanel container;
     private JLabel lbl_brand;
     private JLabel lbl_brand_name;
@@ -23,26 +23,26 @@ public class BrandView extends Layout{
         this.add(container);
         this.guiInitialize(300, 200);
 
-        if (brand != null){
+        if (brand != null) {
             this.fld_brand_name.setText(brand.getName());
         }
 
         btn_brand_save.addActionListener(e -> {
-            if(Helper.isFieldEmpty(this.fld_brand_name)){
+            if (Helper.isFieldEmpty(this.fld_brand_name)) {
                 Helper.showMsg("fill");
-            }else {
-                boolean result ;
+            } else {
+                boolean result;
                 // Eğer içi dolu bir Brand nesnesi alırsa güncelleme, içi boş bir Brand nesnesi alırsa kaydetme işlemi yapılacak.
-                if(this.brand == null) {
+                if (this.brand == null) {
                     result = this.brandManager.save(new Brand(fld_brand_name.getText()));
-                }else {
+                } else {
                     this.brand.setName(fld_brand_name.getText());
                     result = this.brandManager.update(this.brand);
                 }
-                if (result){
+                if (result) {
                     Helper.showMsg("done");
                     dispose();
-                }else {
+                } else {
                     Helper.showMsg("error");
                 }
             }

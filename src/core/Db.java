@@ -15,9 +15,8 @@ public class Db {
     private Db() {
         try {
             this.connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
-
         }
     }
 
@@ -25,15 +24,14 @@ public class Db {
         return connection;
     }
 
-    public static Connection getInstance(){
+    public static Connection getInstance() {
         try {
-            if(instance == null || instance.getConnection().isClosed()){
+            if (instance == null || instance.getConnection().isClosed()) {
                 instance = new Db();
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());;
+            System.out.println(e.getMessage());
         }
         return instance.getConnection();
     }
-
 }

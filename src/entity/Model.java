@@ -12,7 +12,6 @@ public class Model {
     private Gear gear;
     private Brand brand;
 
-
     public enum Fuel {
         GASOLINE,
         LPG,
@@ -30,7 +29,7 @@ public class Model {
         HACBACK
     }
 
-    public Model () {
+    public Model() {
     }
 
     public Model(int id, int brand_id, String name, Type type, String year, Fuel fuel, Gear gear, Brand brand) {

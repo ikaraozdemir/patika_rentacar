@@ -17,7 +17,7 @@ public class Car {
         AQUA
     }
 
-    public Car () {
+    public Car() {
     }
 
     public int getId() {

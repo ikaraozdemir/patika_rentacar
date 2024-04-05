@@ -9,7 +9,7 @@ import entity.Model;
 
 import javax.swing.*;
 
-public class CarView extends Layout{
+public class CarView extends Layout {
     private JPanel container;
     private JComboBox<ComboItem> cmb_model;
     private JComboBox<Car.Color> cmb_color;
@@ -20,13 +20,12 @@ public class CarView extends Layout{
     private CarManager carManager;
     private ModelManager modelManager;
 
-    public CarView (Car car) {
+    public CarView(Car car) {
         this.car = car;
         this.carManager = new CarManager();
         this.modelManager = new ModelManager();
         this.add(container);
         this.guiInitialize(300, 400);
-
 
         this.cmb_color.setModel(new DefaultComboBoxModel<>(Car.Color.values()));
         for (Model model : this.modelManager.findAll()) {
@@ -51,7 +50,7 @@ public class CarView extends Layout{
                 this.car.setColor((Car.Color) this.cmb_color.getSelectedItem());
                 this.car.setPlate(this.fld_plate.getText());
                 this.car.setKm(Integer.parseInt(this.fld_km.getText()));
-                if (this.car.getId() != 0){
+                if (this.car.getId() != 0) {
                     result = this.carManager.update(this.car);
                 } else {
                     result = this.carManager.save(this.car);
@@ -64,7 +63,5 @@ public class CarView extends Layout{
                 }
             }
         });
-
-
     }
 }

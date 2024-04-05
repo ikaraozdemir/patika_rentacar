@@ -15,8 +15,7 @@ public class CarDao {
     private final BrandDao brandDao;
     private final ModelDao modelDao;
 
-
-    public CarDao () {
+    public CarDao() {
         this.connection = Db.getInstance();
         this.brandDao = new BrandDao();
         this.modelDao = new ModelDao();
@@ -27,33 +26,33 @@ public class CarDao {
         String query = "SELECT * FROM public.car WHERE car_id = ?";
         try {
             PreparedStatement pr = this.connection.prepareStatement(query);
-            pr.setInt(1,id);
+            pr.setInt(1, id);
             ResultSet rs = pr.executeQuery();
             if (rs.next()) obj = this.match(rs);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return obj;
     }
 
     public ArrayList<Car> findAll() {
-        return this.selectByQuery ("SELECT * FROM public.car ORDER BY car_id ASC");
+        return this.selectByQuery("SELECT * FROM public.car ORDER BY car_id ASC");
     }
 
-    public ArrayList<Car> selectByQuery (String query) {
+    public ArrayList<Car> selectByQuery(String query) {
         ArrayList<Car> cars = new ArrayList<>();
         try {
             ResultSet rs = this.connection.createStatement().executeQuery(query);
-            while (rs.next()){
+            while (rs.next()) {
                 cars.add(this.match(rs));
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return cars;
     }
 
-    public Car match (ResultSet rs) throws SQLException {
+    public Car match(ResultSet rs) throws SQLException {
         Car car = new Car();
         car.setId(rs.getInt("car_id"));
         car.setModel_id(rs.getInt("car_model_id"));
@@ -77,15 +76,15 @@ public class CarDao {
             pr.setString(2, car.getColor().toString());
             pr.setInt(3, car.getKm());
             pr.setString(4, car.getPlate());
-            pr.setInt(5, car.getId() );
+            pr.setInt(5, car.getId());
             return pr.executeUpdate() != -1;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return true;
     }
 
-    public boolean save (Car car) {
+    public boolean save(Car car) {
         String query = "INSERT INTO public.car (" +
                 "car_model_id, " +
                 "car_color, " +
@@ -99,22 +98,21 @@ public class CarDao {
             pr.setInt(3, car.getKm());
             pr.setString(4, car.getPlate());
             return pr.executeUpdate() != -1;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return true;
     }
 
-    public boolean delete (int carId) {
+    public boolean delete(int carId) {
         String query = "DELETE FROM public.car WHERE car_id = ?";
-        try{
+        try {
             PreparedStatement pr = this.connection.prepareStatement(query);
-            pr.setInt(1,carId);
+            pr.setInt(1, carId);
             return pr.executeUpdate() != -1;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return true;
     }
-
 }

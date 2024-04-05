@@ -1,7 +1,9 @@
 package business;
+
 import core.Helper;
 import dao.ModelDao;
 import entity.Model;
+
 import java.util.ArrayList;
 
 public class ModelManager {
@@ -11,9 +13,9 @@ public class ModelManager {
         this.modelDao = new ModelDao();
     }
 
-    public ArrayList<Object[]> getForTable (int size,ArrayList<Model> modelList) {
+    public ArrayList<Object[]> getForTable(int size, ArrayList<Model> modelList) {
         ArrayList<Object[]> modelObjList = new ArrayList<>();
-        for (Model model : modelList){
+        for (Model model : modelList) {
             int i = 0;
             Object[] rowObject = new Object[size];
             rowObject[i++] = model.getId();
@@ -28,43 +30,45 @@ public class ModelManager {
         }
         return modelObjList;
     }
-    public ArrayList <Model> findAll() {
+
+    public ArrayList<Model> findAll() {
         return this.modelDao.findAll();
     }
 
-    public boolean save (Model model) {
-        if(this.getById(model.getId()) != null){
+    public boolean save(Model model) {
+        if (this.getById(model.getId()) != null) {
             Helper.showMsg("error");
             return false;
         }
         return this.modelDao.save(model);
     }
-    public Model getById (int id){
+
+    public Model getById(int id) {
         return this.modelDao.getById(id);
     }
 
 
-    public boolean update(Model model){
-        if(this.getById(model.getId()) == null){
+    public boolean update(Model model) {
+        if (this.getById(model.getId()) == null) {
             Helper.showMsg("notFound");
             return false;
         }
         return this.modelDao.update(model);
     }
 
-    public boolean delete (int id){
-        if(this.getById(id) == null) {
-            Helper.showMsg(id +"ID kayıtlı model bulunamadı");
+    public boolean delete(int id) {
+        if (this.getById(id) == null) {
+            Helper.showMsg(id + "ID kayıtlı model bulunamadı");
             return false;
         }
         return this.modelDao.delete(id);
     }
 
-    public ArrayList<Model> getByBrandId (int brandId){
+    public ArrayList<Model> getByBrandId(int brandId) {
         return this.modelDao.getByListBrandId(brandId);
     }
 
-    public ArrayList<Model> searchForTable (int brandId, Model.Fuel fuel, Model.Gear gear, Model.Type type) {
+    public ArrayList<Model> searchForTable(int brandId, Model.Fuel fuel, Model.Gear gear, Model.Type type) {
 
         String select = "SELECT * FROM  public.model";
         ArrayList<String> whereList = new ArrayList<>();
